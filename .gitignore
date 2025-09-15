@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# keep env example in repo
+!.env.example
+
+# Turbopack cache
+.turbo/
+
+# Editor/OS junk
+.vscode/*
+!.vscode/settings.json
+.idea/
+Thumbs.db
+
+# Backups from earlier fixes
+app_backup_*/
