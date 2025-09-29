@@ -12,17 +12,16 @@ export default function Error({
     console.error(error);
   }, [error]);
   return (
-    <div style={{ padding: 24 }}>
-      <h2 style={{ fontWeight: 600, fontSize: 20, marginBottom: 8 }}>
+    <div className="container" style={{ paddingBlock: "1.5rem" }}>
+      <h2
+        style={{ fontWeight: 600, fontSize: "1.25rem", marginBottom: "0.5rem" }}
+      >
         Coś poszło nie tak
       </h2>
       <button
         onClick={() => reset()}
-        style={{
-          padding: "8px 12px",
-          borderRadius: 8,
-          border: "1px solid #e5e7eb",
-        }}
+        className="btn btn-outline"
+        style={{ padding: "0.5rem 0.75rem", borderRadius: "0.5rem" }}
       >
         Spróbuj ponownie
       </button>
