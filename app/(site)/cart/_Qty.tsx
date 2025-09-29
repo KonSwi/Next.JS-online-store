@@ -3,12 +3,12 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Qty({
-  itemId,
-  qty,
-}: {
-  itemId: number; 
-}) {
+type QtyProps = {
+  itemId: number;
+  qty: number;
+};
+
+export default function Qty({ itemId, qty }: QtyProps) {
   const router = useRouter();
   const [pending, start] = useTransition();
 
