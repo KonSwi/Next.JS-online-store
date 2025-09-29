@@ -5,51 +5,125 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")  
 }
 
 model Category {
   id          Int       @id @default(autoincrement())
-  name        String
+  name        String    @unique
   description String?
   imageUrl    String?
   exploreInfo String?
-
   products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
 }
 
 model Brand {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  imageUrl  String?
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  imageUrl String?
+  products Product[]
 }
 
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
   description String?
-  price       Decimal   @db.Decimal(10,2)
+  price       Decimal   @db.Decimal(10, 2)
   stock       Int       @default(0)
   imageUrl    String?
+
   categoryId  Int
   brandId     Int?
 
   category    Category  @relation(fields: [categoryId], references: [id])
   brand       Brand?    @relation(fields: [brandId], references: [id])
+
+  orderItems  OrderItem[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
 
 model User {
   id           Int       @id @default(autoincrement())
-  firstName    String?
   email        String    @unique
+  phone        String?   @unique
+  firstName    String?
   passwordHash String
   address      String?
+  orders       Order[]
+  avatarUrl    String?
   createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  accounts     Account[]
+  sessions     Session[]
+}
+
+
+model Order {
+  id          Int          @id @default(autoincrement())
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+  createdAt   DateTime     @default(now())
+  status      OrderStatus  @default(PENDING)
+  totalAmount Decimal      @db.Decimal(10, 2)
+  orderItems  OrderItem[]
+}
+
+model OrderItem {
+  id              Int      @id @default(autoincrement())
+  orderId         Int
+  productId       Int
+  quantity        Int      @default(1)
+  priceAtPurchase Decimal  @db.Decimal(10, 2)
+  note            String?  
+
+  order           Order    @relation(fields: [orderId], references: [id])
+  product         Product  @relation(fields: [productId], references: [id])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELLED
+  COMPLETED
+}
+
+/* ========== NextAuth adapter models ========== */
+
+model Account {
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
