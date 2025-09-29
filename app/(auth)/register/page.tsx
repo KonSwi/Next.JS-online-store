@@ -17,8 +17,8 @@ const schema = z
     password: z.string().min(6, "Minimum 6 characters"),
     confirmPassword: z.string().min(6, "Minimum 6 characters"),
     country: z.string().min(2, "Required"),
-    agree: z.literal(true, {
-      errorMap: () => ({ message: "You must agree to the terms" }),
+    agree: z.boolean().refine((v) => v === true, {
+      message: "You must agree to the terms",
     }),
   })
   .refine((d) => d.password === d.confirmPassword, {
