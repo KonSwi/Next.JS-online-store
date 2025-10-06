@@ -464,3 +464,9 @@ body {
     height: 12.5rem;
   }
 }
+
+/* @media (min-width: 320px) {
+  .testClass {
+    flex-direction: column;
+  }
+} */

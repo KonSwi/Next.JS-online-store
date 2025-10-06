@@ -129,7 +129,7 @@ export default function CategoryCarousel({ items }: { items: Category[] }) {
           {cur?.imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              className="w-full h-full object-cover scale-140 rotate-[15deg]"
+              className="w-full h-full object-cover scale-140"
               src={cur.imageUrl}
               alt={cur.name}
               style={{ zIndex: "1" }}

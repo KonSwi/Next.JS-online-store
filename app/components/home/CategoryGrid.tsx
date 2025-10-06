@@ -26,7 +26,7 @@ export default function CategoryGrid({ items }: { items: Category[] }) {
   }
 
   return (
-    <div className="gap-1 flex justify-between my-8">
+    <div className="testClass gap-1 flex justify-between my-8">
       {items.map((c) => {
         const iconSrc = ICONS[c.name] ?? "/icons/category/mouse.png";
         return (
