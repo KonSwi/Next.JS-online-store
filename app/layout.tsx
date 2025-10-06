@@ -1,15 +1,18 @@
-import './globals.css';
-import type { Metadata } from 'next';
+import "./global.css";
 
-export const metadata: Metadata = {
-  title: 'NextJS Online Store',
-  description: 'Etap 1 — baza projektu',
+export const metadata = {
+  title: "DevstockHub",
+  description: "E-commerce in Next.js",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="pl">
-      <body className="bg-white text-black">{children}</body>
+    <html lang="en" className="h-full">
+      <body className="min-h-screen flex flex-col">{children}</body>
     </html>
   );
 }

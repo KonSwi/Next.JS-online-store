@@ -1,12 +1,15 @@
+import Link from "next/link";
 export default function NotFound() {
   return (
-    <div style={{ padding: 24 }}>
-      <h1 style={{ fontWeight: 600, fontSize: 20, marginBottom: 8 }}>
-        404 — Nie znaleziono strony
+    <div className="container" style={{ paddingBlock: "1.5rem" }}>
+      <h1
+        style={{ fontWeight: 600, fontSize: "1.25rem", marginBottom: "0.5rem" }}
+      >
+        404 — Page not found
       </h1>
-      <a href="/" style={{ textDecoration: "underline" }}>
-        ← Wróć na stronę główną
-      </a>
+      <Link href="/" style={{ textDecoration: "underline" }}>
+        ← Go back home
+      </Link>
     </div>
   );
 }
